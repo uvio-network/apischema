@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package claim;
+option go_package = "./;claim";
+
+// UpdateI is the input for updating claims.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "clam": "778237"
+//                 },
+//                 "update": [
+//                     {
+//                         "ope": "replace",
+//                         "pat": "/time/data",
+//                         "val": "1689001255"
+//                     }
+//                 ]
+//             }
+//         ]
+//     }
+//
+message UpdateI {
+  UpdateI_Filter filter = 100;
+  repeated UpdateI_Object object = 200;
+}
+
+message UpdateI_Filter {}
+
+message UpdateI_Object {
+  UpdateI_Object_Intern intern = 100;
+  UpdateI_Object_Public public = 200;
+  UpdateI_Object_Symbol symbol = 300;
+  repeated UpdateI_Object_Update update = 400;
+}
+
+message UpdateI_Object_Intern {
+  // clam is the ID of the claim being updated.
+  string clam = 100;
+}
+
+message UpdateI_Object_Public {}
+
+message UpdateI_Object_Symbol {
+  // link set to "add" indexes a new reaction for the given claim, tracking the
+  // claim link click for the calling user.
+  string link = 100;
+}
+
+message UpdateI_Object_Update {
+  string frm = 100;
+  string ope = 200;
+  string pat = 300;
+  string val = 400;
+}
+
+// UpdateO is the output for updating claims.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "stts": "updated"
+//                 }
+//             }
+//         ]
+//     }
+//
+message UpdateO {
+  UpdateO_Filter filter = 100;
+  repeated UpdateO_Object object = 200;
+}
+
+message UpdateO_Filter {}
+
+message UpdateO_Object {
+  UpdateO_Object_Intern intern = 100;
+  UpdateO_Object_Public public = 200;
+}
+
+message UpdateO_Object_Intern {
+  // stts is the resource status upon successful claim modification.
+  string stts = 100;
+}
+
+message UpdateO_Object_Public {}

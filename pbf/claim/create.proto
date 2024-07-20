@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package claim;
+option go_package = "./;claim";
+
+// CreateI is the input for creating claims.
+//
+//     {
+//         "object": [
+//             {
+//                 "public": {
+//                     "cate": "863826",
+//                     "dura": "3600",
+//                     "host": "233923",
+//                     "link": "https://google.com",
+//                     "time": "1689001255"
+//                 }
+//             }
+//         ]
+//     }
+//
+message CreateI {
+  CreateI_Filter filter = 100;
+  repeated CreateI_Object object = 200;
+}
+
+message CreateI_Filter {}
+
+message CreateI_Object {
+  CreateI_Object_Intern intern = 100;
+  CreateI_Object_Public public = 200;
+}
+
+message CreateI_Object_Intern {}
+
+message CreateI_Object_Public {
+  // cate is the comma separated list of label IDs under which the claim is
+  // categorized.
+  string cate = 100;
+  // dura is the estimated duration of the claim in seconds.
+  string dura = 200;
+  // host is the internal host ID expected to host the claim.
+  string host = 300;
+  // link is the online location at which the claim is expected to take place.
+  // For IRL claims this may just be some informational website.
+  string link = 400;
+  // time is the unix timestamp in seconds at which the claim is expected to
+  // start.
+  string time = 500;
+}
+
+// CreateO is the output for creating claims.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "clam": "778237",
+//                     "crtd": "1689001255"
+//                 }
+//             }
+//         ]
+//     }
+//
+message CreateO {
+  CreateO_Filter filter = 100;
+  repeated CreateO_Object object = 200;
+}
+
+message CreateO_Filter {}
+
+message CreateO_Object {
+  CreateO_Object_Intern intern = 100;
+  CreateO_Object_Public public = 200;
+}
+
+message CreateO_Object_Intern {
+  // crtd is the unix timestamp in seconds at which the claim got created.
+  string crtd = 100;
+  // clam is the ID of the claim being created.
+  string clam = 200;
+}
+
+message CreateO_Object_Public {}

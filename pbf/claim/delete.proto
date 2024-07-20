@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package claim;
+option go_package = "./;claim";
+
+// DeleteI is the input for deleting claims.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "clam": "778237"
+//                 }
+//             }
+//         ]
+//     }
+//
+message DeleteI {
+  DeleteI_Filter filter = 100;
+  repeated DeleteI_Object object = 200;
+}
+
+message DeleteI_Filter {}
+
+message DeleteI_Object {
+  DeleteI_Object_Intern intern = 100;
+  DeleteI_Object_Public public = 200;
+}
+
+message DeleteI_Object_Intern {
+  // clam is the ID of the claim being deleted.
+  string clam = 100;
+}
+
+message DeleteI_Object_Public {}
+
+// DeleteO is the output for deleting claims.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "stts": "deleted"
+//                 }
+//             }
+//         ]
+//     }
+//
+message DeleteO {
+  DeleteO_Filter filter = 100;
+  repeated DeleteO_Object object = 200;
+}
+
+message DeleteO_Filter {}
+
+message DeleteO_Object {
+  DeleteO_Object_Intern intern = 100;
+  DeleteO_Object_Public public = 200;
+}
+
+message DeleteO_Object_Intern {
+  // stts is the resource status upon successful claim deletion.
+  string stts = 100;
+}
+
+message DeleteO_Object_Public {}
