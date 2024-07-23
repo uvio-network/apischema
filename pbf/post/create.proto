@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package post;
+option go_package = "./;post";
+
+// CreateI is the input for creating posts.
+//
+//     {
+//         "object": [
+//             {
+//                 "public": {
+//                     "expiry": "1689001255",
+//                     "kind": "claim",
+//                     "option": "true",
+//                     "stake": "1.5",
+//                     "text": "foo bar lorem ipsum",
+//                     "token": "WETH",
+//                 }
+//             }
+//         ]
+//     }
+//
+message CreateI {
+  CreateI_Filter filter = 100;
+  repeated CreateI_Object object = 200;
+}
+
+message CreateI_Filter {}
+
+message CreateI_Object {
+  CreateI_Object_Intern intern = 100;
+  CreateI_Object_Public public = 200;
+}
+
+message CreateI_Object_Intern {}
+
+message CreateI_Object_Public {
+  // expiry is the unix timestamp in seconds at which the post expires. Every
+  // expiry marks the point in time at which a claim may transition into a new
+  // lifecycle phase.
+  string expiry = 100;
+  // kind is the type of post, e.g. "claim" or "comment" on which reputation is
+  // staked.
+  string kind = 200;
+  // option is the side of the bet taken with this post, e.g. "true" or "false".
+  // If option is "true", then the staked reputation agrees with the given
+  // statement. If option is "false", then the staked reputation disagrees with
+  // the given statement.
+  string option = 300;
+  // stake is the amount of reputation staked.
+  string stake = 400;
+  // text is the human readable description the user provides in order to make a
+  // statement. This text may be provided in markdown format. This text might as
+  // be long as a common blog post. This text might contain external links.
+  string text = 500;
+  // token is the token in which the staked reputation is denominated.
+  string token = 600;
+}
+
+// CreateO is the output for creating posts.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "created": "1689001255",
+//                     "post": "778237"
+//                 }
+//             }
+//         ]
+//     }
+//
+message CreateO {
+  CreateO_Filter filter = 100;
+  repeated CreateO_Object object = 200;
+}
+
+message CreateO_Filter {}
+
+message CreateO_Object {
+  CreateO_Object_Intern intern = 100;
+  CreateO_Object_Public public = 200;
+}
+
+message CreateO_Object_Intern {
+  // created is the unix timestamp in seconds at which the post got created.
+  string created = 100;
+  // post is the ID of the post being created.
+  string post = 200;
+}
+
+message CreateO_Object_Public {}

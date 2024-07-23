@@ -1,15 +1,15 @@
 syntax = "proto3";
 
-package claim;
-option go_package = "./;claim";
+package post;
+option go_package = "./;post";
 
-// DeleteI is the input for deleting claims.
+// DeleteI is the input for deleting posts.
 //
 //     {
 //         "object": [
 //             {
 //                 "intern": {
-//                     "clam": "778237"
+//                     "post": "778237"
 //                 }
 //             }
 //         ]
@@ -28,19 +28,19 @@ message DeleteI_Object {
 }
 
 message DeleteI_Object_Intern {
-  // clam is the ID of the claim being deleted.
-  string clam = 100;
+  // post is the ID of the post being deleted.
+  string post = 100;
 }
 
 message DeleteI_Object_Public {}
 
-// DeleteO is the output for deleting claims.
+// DeleteO is the output for deleting posts.
 //
 //     {
 //         "object": [
 //             {
 //                 "intern": {
-//                     "stts": "deleted"
+//                     "status": "deleted"
 //                 }
 //             }
 //         ]
@@ -59,8 +59,8 @@ message DeleteO_Object {
 }
 
 message DeleteO_Object_Intern {
-  // stts is the resource status upon successful claim deletion.
-  string stts = 100;
+  // status is the resource status upon successful post deletion.
+  string status = 100;
 }
 
 message DeleteO_Object_Public {}

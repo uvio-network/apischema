@@ -1,0 +1,163 @@
+syntax = "proto3";
+
+package post;
+option go_package = "./;post";
+
+// SearchI is the input for searching posts.
+//
+//     {
+//         "filter": {
+//             "paging": {
+//                 "kind": "page",
+//                 "start": "0",
+//                 "stop": "49"
+//             }
+//         },
+//         "object": [
+//             {
+//                 "intern": {
+//                     "post": "778237"
+//                 }
+//             }
+//         ]
+//     }
+//
+message SearchI {
+  SearchI_Filter filter = 100;
+  repeated SearchI_Object object = 200;
+}
+
+message SearchI_Filter { SearchI_Filter_Paging paging = 100; }
+
+message SearchI_Filter_Paging {
+  string kind = 100;
+  string start = 200;
+  string stop = 300;
+}
+
+message SearchI_Object {
+  SearchI_Object_Intern intern = 100;
+  SearchI_Object_Public public = 200;
+  SearchI_Object_Symbol symbol = 300;
+}
+
+message SearchI_Object_Intern {
+  // post is the ID of the post being searched. If searching for a particular
+  // post, the search query object must not contain any other fields.
+  string post = 100;
+  // user is the ID of the user having created the posts being searched. If
+  // searching for posts created by a particular user, the search query object
+  // must not contain any other fields.
+  string user = 200;
+}
+
+message SearchI_Object_Public {}
+
+message SearchI_Object_Symbol {
+  // list set to any valid list ID returns all of the posts belonging to this
+  // list. Paging is available for paging kind "page" and "unix".
+  string list = 100;
+  // time set to "latest" returns all posts in reverse chronological order.
+  // Paging is available for paging kind "page" and "unix".
+  string time = 300;
+}
+
+// SearchO is the output for searching posts.
+//
+//     {
+//         "object": [
+//             {
+//                 "extern": [
+//                     {
+//                         "kind": "list",
+//                         "user": true
+//                     }
+//                 ],
+//                 "intern": {
+//                     "created": "1689001255",
+//                     "post": "778237"
+//                     "user": "551265"
+//                 },
+//                 "public": {
+//                     "expiry": "1689001255",
+//                     "kind": "claim",
+//                     "stake": "10,2,1,4.843",
+//                     "text": "foo bar lorem ipsum",
+//                     "token": "WETH",
+//                 }
+//             }
+//         ]
+//     }
+//
+message SearchO {
+  SearchO_Filter filter = 100;
+  repeated SearchO_Object object = 200;
+}
+
+message SearchO_Filter {}
+
+message SearchO_Object {
+  repeated SearchO_Object_Extern extern = 100;
+  SearchO_Object_Intern intern = 200;
+  SearchO_Object_Public public = 300;
+}
+
+message SearchO_Object_Extern {
+  // kind is the type of external action being tracked, e.g. "list" for users
+  // adding this post of kind "claim" to one of their own lists.
+  string kind = 100;
+  // user expresses whether the calling user did the given external action
+  // themselves. For instance, if kind equals "list" and user equals "true",
+  // then the calling user added this post of kind "claim" to on of their own
+  // lists.
+  bool user = 200;
+}
+
+message SearchO_Object_Intern {
+  // created is the unix timestamp in seconds at which this post got created.
+  string created = 100;
+  // post is the ID of the post being searched.
+  string post = 200;
+  // user is the ID of the user who created this post.
+  string user = 300;
+}
+
+message SearchO_Object_Public {
+  // expiry is the unix timestamp in seconds at which the post expires. Every
+  // expiry marks the point in time at which a claim may transition into a new
+  // lifecycle phase.
+  string expiry = 100;
+  // kind is the type of post, e.g. "claim" or "comment" on which reputation is
+  // staked.
+  string kind = 200;
+  // option is the side of the bet taken with this post if kind equals
+  // "comment". If option does then equal "true", the staked reputation agrees
+  // with the given statement. If option does then equal "false", the staked
+  // reputation disagrees with the given statement.
+  string option = 300;
+  // stake is the amount of reputation staked. If kind equals "claim", then
+  // stake might be a comma separated string of token values in the format
+  // "agreement,disagreement,stake,share", if applicable.
+  //
+  //     "agreement" will then represent all reputation staked in agreement with
+  //     the given statement.
+  //
+  //     "disagreement" will then represent all reputation staked in
+  //     disagreement with the given statement.
+  //
+  //     "stake" will then represent the initial amount of staked reputation, if
+  //     the calling user participated in the given market.
+  //
+  //     "share" will then represent the intermediate or final value of staked
+  //     reputation belonging to the calling user, if said user did in fact
+  //     participate in teh given market.
+  //
+  string stake = 400;
+  // text is the human readable description the user provides in order to make a
+  // statement whether kind equals "claim" or "comment". This text may be
+  // provided in markdown format. This text might be as long as a common blog
+  // post. This text might contain external links.
+  string text = 500;
+  // token is the token in which the staked reputation is denominated.
+  string token = 600;
+}
