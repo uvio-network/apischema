@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package claim;
-option go_package = "./;claim";
+package post;
+option go_package = "./;post";
 
-import "pbf/claim/create.proto";
-import "pbf/claim/delete.proto";
-import "pbf/claim/search.proto";
-import "pbf/claim/update.proto";
+import "pbf/post/create.proto";
+import "pbf/post/delete.proto";
+import "pbf/post/search.proto";
+import "pbf/post/update.proto";
 
 service API {
   rpc Create(CreateI) returns (CreateO) {}

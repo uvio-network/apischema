@@ -1,21 +1,21 @@
 syntax = "proto3";
 
-package claim;
-option go_package = "./;claim";
+package post;
+option go_package = "./;post";
 
-// UpdateI is the input for updating claims.
+// UpdateI is the input for updating posts.
 //
 //     {
 //         "object": [
 //             {
 //                 "intern": {
-//                     "clam": "778237"
+//                     "post": "778237"
 //                 },
 //                 "update": [
 //                     {
-//                         "ope": "replace",
-//                         "pat": "/time/data",
-//                         "val": "1689001255"
+//                         "operation": "replace",
+//                         "path": "/text",
+//                         "value": "this the real one"
 //                     }
 //                 ]
 //             }
@@ -37,32 +37,28 @@ message UpdateI_Object {
 }
 
 message UpdateI_Object_Intern {
-  // clam is the ID of the claim being updated.
-  string clam = 100;
+  // post is the ID of the post being updated.
+  string post = 100;
 }
 
 message UpdateI_Object_Public {}
 
-message UpdateI_Object_Symbol {
-  // link set to "add" indexes a new reaction for the given claim, tracking the
-  // claim link click for the calling user.
-  string link = 100;
-}
+message UpdateI_Object_Symbol {}
 
 message UpdateI_Object_Update {
-  string frm = 100;
-  string ope = 200;
-  string pat = 300;
-  string val = 400;
+  string from = 100;
+  string operation = 200;
+  string path = 300;
+  string value = 400;
 }
 
-// UpdateO is the output for updating claims.
+// UpdateO is the output for updating posts.
 //
 //     {
 //         "object": [
 //             {
 //                 "intern": {
-//                     "stts": "updated"
+//                     "status": "updated"
 //                 }
 //             }
 //         ]
@@ -81,8 +77,8 @@ message UpdateO_Object {
 }
 
 message UpdateO_Object_Intern {
-  // stts is the resource status upon successful claim modification.
-  string stts = 100;
+  // status is the resource status upon successful post modification.
+  string status = 100;
 }
 
 message UpdateO_Object_Public {}
