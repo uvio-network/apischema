@@ -9,7 +9,7 @@ option go_package = "./;post";
 //         "object": [
 //             {
 //                 "intern": {
-//                     "post": "778237"
+//                     "id": "778237"
 //                 }
 //             }
 //         ]
@@ -28,8 +28,8 @@ message DeleteI_Object {
 }
 
 message DeleteI_Object_Intern {
-  // post is the ID of the post being deleted.
-  string post = 100;
+  // id is the ID of the post object being deleted.
+  string id = 100;
 }
 
 message DeleteI_Object_Public {}
