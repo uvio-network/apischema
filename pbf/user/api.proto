@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package user;
+option go_package = "./;user";
+
+import "pbf/user/create.proto";
+import "pbf/user/delete.proto";
+import "pbf/user/search.proto";
+import "pbf/user/update.proto";
+
+service API {
+  rpc Create(CreateI) returns (CreateO) {}
+  rpc Delete(DeleteI) returns (DeleteO) {}
+  rpc Search(SearchI) returns (SearchO) {}
+  rpc Update(UpdateI) returns (UpdateO) {}
+}

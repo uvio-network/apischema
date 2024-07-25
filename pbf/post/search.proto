@@ -27,7 +27,9 @@ message SearchI {
   repeated SearchI_Object object = 200;
 }
 
-message SearchI_Filter { SearchI_Filter_Paging paging = 100; }
+message SearchI_Filter {
+  SearchI_Filter_Paging paging = 100;
+}
 
 message SearchI_Filter_Paging {
   string kind = 100;
