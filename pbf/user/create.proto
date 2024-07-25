@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package user;
+option go_package = "./;user";
+
+// CreateI is the input for creating users.
+//
+//     {
+//         "object": [
+//             {
+//                 "public": {
+//                     "image": "https://gravatar.com/9050f8ea",
+//                     "name": "xh3b4sd"
+//                 }
+//             }
+//         ]
+//     }
+//
+message CreateI {
+  CreateI_Filter filter = 100;
+  repeated CreateI_Object object = 200;
+}
+
+message CreateI_Filter {}
+
+message CreateI_Object {
+  CreateI_Object_Intern intern = 100;
+  CreateI_Object_Public public = 200;
+}
+
+message CreateI_Object_Intern {}
+
+message CreateI_Object_Public {
+  // image is the URL pointing to the user's profile picture.
+  string image = 100;
+  // name is the user name.
+  string name = 200;
+}
+
+// CreateO is the output for creating users.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "created": "1689001255",
+//                     "id": "551265"
+//                 }
+//             }
+//         ]
+//     }
+//
+message CreateO {
+  CreateO_Filter filter = 100;
+  repeated CreateO_Object object = 200;
+}
+
+message CreateO_Filter {}
+
+message CreateO_Object {
+  CreateO_Object_Intern intern = 100;
+  CreateO_Object_Public public = 200;
+}
+
+message CreateO_Object_Intern {
+  // created is the unix timestamp in seconds at which the user got created.
+  string created = 100;
+  // id is the ID of the user being created.
+  string id = 200;
+}
+
+message CreateO_Object_Public {}

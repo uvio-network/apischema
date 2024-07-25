@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package user;
+option go_package = "./;user";
+
+// UpdateI is the input for updating users.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "id": "551265"
+//                 }
+//                 "update": [
+//                     {
+//                         "operation": "replace",
+//                         "path": "/name/data",
+//                         "value": "xh3"
+//                     }
+//                 ]
+//             }
+//         ]
+//     }
+//
+message UpdateI {
+  UpdateI_Filter filter = 100;
+  repeated UpdateI_Object object = 200;
+}
+
+message UpdateI_Filter {}
+
+message UpdateI_Object {
+  UpdateI_Object_Intern intern = 100;
+  UpdateI_Object_Public public = 200;
+  UpdateI_Object_Symbol symbol = 300;
+  repeated UpdateI_Object_Update update = 400;
+}
+
+message UpdateI_Object_Intern {
+  // id is the ID of the user being updated.
+  string id = 100;
+}
+
+message UpdateI_Object_Public {}
+
+message UpdateI_Object_Symbol {}
+
+message UpdateI_Object_Update {
+  string from = 100;
+  string operation = 200;
+  string path = 300;
+  string value = 400;
+}
+
+// UpdateO is the output for updating users.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "status": "updated"
+//                 }
+//             }
+//         ]
+//     }
+//
+message UpdateO {
+  UpdateO_Filter filter = 100;
+  repeated UpdateO_Object object = 200;
+}
+
+message UpdateO_Filter {}
+
+message UpdateO_Object {
+  UpdateO_Object_Intern intern = 100;
+  UpdateO_Object_Public public = 200;
+}
+
+message UpdateO_Object_Intern {
+  // status is the resource status upon successful user modification.
+  string status = 100;
+}
+
+message UpdateO_Object_Public {}

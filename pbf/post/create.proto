@@ -69,8 +69,9 @@ message CreateI_Object_Public {
   // stake is the amount of reputation staked.
   string stake = 600;
   // text is the human readable description the user provides in order to make a
-  // statement. This text may be provided in markdown format. This text might as
-  // be long as a common blog post. This text might contain external links.
+  // statement, whether the post kind is "claim" or "comment". This text may be
+  // provided in markdown format. This text might as be long as a common blog
+  // post. This text might contain external links.
   string text = 700;
   // token is the token in which the staked reputation is denominated.
   string token = 800;
