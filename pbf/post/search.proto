@@ -61,7 +61,11 @@ message SearchI_Object_Symbol {
   string list = 100;
   // time set to "latest" returns all posts in reverse chronological order.
   // Paging is available for paging kind "page" and "unix".
-  string time = 300;
+  string time = 200;
+  // tree set to any valid ID referring to a tree of claims returns all those
+  // claims belonging to the same tree. There is no paging support since the
+  // number of claims that any given tree may have is rather limited.
+  string tree = 300;
 }
 
 // SearchO is the output for searching posts.
@@ -121,13 +125,13 @@ message SearchO_Object_Intern {
   // created is the unix timestamp in seconds at which this post got created.
   string created = 100;
   // id is the ID of the post object being searched.
-  string id = 300;
+  string id = 200;
   // owner is the ID of the user who created this post.
-  string owner = 400;
+  string owner = 300;
   // tree is the internal list ID within which all referenced claims are grouped
   // together. Using this tree ID it is possible to search for all claims
   // belonging to the same lifecycle.
-  string tree = 500;
+  string tree = 400;
 }
 
 message SearchO_Object_Public {
