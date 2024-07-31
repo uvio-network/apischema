@@ -88,8 +88,9 @@ message SearchI_Object_Symbol {
 //                 "public": {
 //                     "expiry": "1689001255",
 //                     "kind": "claim",
+//                     "labels": "economy,inflation",
 //                     "lifecycle": "propose",
-//                     "stake": "10,2,1,4.843",
+//                     "stake": "10,2,1,1,4.843",
 //                     "text": "foo bar lorem ipsum",
 //                     "token": "WETH"
 //                 }
@@ -142,8 +143,13 @@ message SearchO_Object_Public {
   // kind is the type of post, e.g. "claim" or "comment" on which reputation is
   // staked.
   string kind = 200;
+  // labels is a comma separated list of category labels that this claim is
+  // related to.
+  string labels = 300;
   // lifecycle describes the evolutionary stage of a claim within its own tree.
   // Only posts of kind "claim" will have a lifecycle set.
+  //
+  //     "adjourn" describes claims that defer claim resolution.
   //
   //     "propose" describes claims that make any initial statement.
   //
@@ -153,41 +159,47 @@ message SearchO_Object_Public {
   //
   //     "nullify" describes claims that question the verifiability of truth.
   //
-  string lifecycle = 300;
-  // option is the side of the bet taken with this post if kind equals
-  // "comment". If option does then equal "true", the staked reputation agrees
-  // with the given statement. If option does then equal "false", the staked
-  // reputation disagrees with the given statement.
-  string option = 400;
+  string lifecycle = 400;
+  // option is the side of the bet that the calling user took as market
+  // participant if this is a post of kind "claim". If the caller did not
+  // participate in this market, then option will be empty, given that the post
+  // kind is "claim". If kind equals "comment", then option is the side of the
+  // bet taken with this post regardless the caller. If option does equal "true"
+  // and the post kind is "comment", then the staked reputation does agree with
+  // the given statement. If option does equal "false" on the other hand, then
+  // the staked reputation disagrees with the given statement.
+  string option = 500;
   // stake is the amount of reputation staked. If kind equals "claim", then
-  // stake might be a comma separated string of token values in the format
-  // "agreement,disagreement,stake,share", if applicable.
+  // stake might be a comma separated string of token denominated values in the
+  // format "agreement,disagreement,minimum,initial,user".
   //
-  //     "agreement" will then represent all reputation staked in agreement with
-  //     the given statement.
+  //     "agreement" will represent all reputation staked in agreement with the
+  //     given statement.
   //
-  //     "disagreement" will then represent all reputation staked in
-  //     disagreement with the given statement.
+  //     "disagreement" will represent all reputation staked in disagreement
+  //     with the given statement.
   //
-  //     "stake" will then represent the initial amount of staked reputation, if
-  //     the calling user participated in the given market.
+  //     "minimum" will represent the minimum amount of reputation that must be
+  //     staked when participating in this market.
   //
-  //     "share" will then represent the intermediate or final value of staked
-  //     reputation belonging to the calling user, if said user did in fact
-  //     participate in teh given market.
+  //     "initial" will represent the initial amount of reputation that the
+  //     proposing user staked when creating this market.
   //
-  string stake = 500;
+  //     "user" will represent the amount of staked reputation belonging to the
+  //     calling user, if said user did in fact participate in the given market.
+  //
+  string stake = 600;
   // parent is the post ID of any claim that references another claim within its
   // own tree. The first claim within a tree does not have a parent. If a post
   // is for instance of kind "claim" and has lifecycle "dispute", then parent
   // will reference the prior claim of kind "resolve" within their common tree,
   // because any dispute does always try to challange any prior resolution.
-  string parent = 600;
+  string parent = 700;
   // text is the human readable description the user provides in order to make a
   // statement whether kind equals "claim" or "comment". This text may be
   // provided in markdown format. This text might be as long as a common blog
   // post. This text might contain external links.
-  string text = 700;
+  string text = 800;
   // token is the token in which the staked reputation is denominated.
-  string token = 800;
+  string token = 900;
 }

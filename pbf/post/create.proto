@@ -11,6 +11,7 @@ option go_package = "./;post";
 //                 "public": {
 //                     "expiry": "1689001255",
 //                     "kind": "claim",
+//                     "labels": "economy,inflation",
 //                     "lifecycle": "propose",
 //                     "option": "true",
 //                     "stake": "1.5",
@@ -43,8 +44,13 @@ message CreateI_Object_Public {
   // kind is the type of post, e.g. "claim" or "comment" on which reputation is
   // staked.
   string kind = 200;
+  // labels is a comma separated list of category labels that this claim is
+  // related to.
+  string labels = 300;
   // lifecycle describes the evolutionary stage of a claim within its own tree.
   // Only posts of kind "claim" will have a lifecycle set.
+  //
+  //     "adjourn" describes claims that defer claim resolution.
   //
   //     "propose" describes claims that make any initial statement.
   //
@@ -54,27 +60,27 @@ message CreateI_Object_Public {
   //
   //     "nullify" describes claims that question the verifiability of truth.
   //
-  string lifecycle = 300;
+  string lifecycle = 400;
   // option is the side of the bet taken with this post, e.g. "true" or "false".
   // If option is "true", then the staked reputation agrees with the given
   // statement. If option is "false", then the staked reputation disagrees with
   // the given statement.
-  string option = 400;
+  string option = 500;
   // parent is the post ID of any claim that references another claim within its
   // own tree. The first claim within a tree does not have a parent. If a post
   // is for instance of kind "claim" and has lifecycle "dispute", then parent
   // will reference the prior claim of kind "resolve" within their common tree,
   // because any dispute does always try to challange any prior resolution.
-  string parent = 500;
+  string parent = 600;
   // stake is the amount of reputation staked.
-  string stake = 600;
+  string stake = 700;
   // text is the human readable description the user provides in order to make a
   // statement, whether the post kind is "claim" or "comment". This text may be
   // provided in markdown format. This text might as be long as a common blog
   // post. This text might contain external links.
-  string text = 700;
+  string text = 800;
   // token is the token in which the staked reputation is denominated.
-  string token = 800;
+  string token = 900;
 }
 
 // CreateO is the output for creating posts.
