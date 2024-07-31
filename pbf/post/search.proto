@@ -51,9 +51,21 @@ message SearchI_Object_Intern {
   // searching for posts created by a particular owner, the search query object
   // must not contain any other fields.
   string owner = 200;
+  // tree set to any valid ID referring to a tree of claims returns all those
+  // claims belonging to the same tree. There is no paging support since the
+  // number of claims that any given tree may have is rather limited.
+  string tree = 300;
 }
 
-message SearchI_Object_Public {}
+message SearchI_Object_Public {
+  // labels is the comma separated list of categories for which claims are being
+  // searched. Providing multiple labels implies to search for the intersection
+  // of all the given labels. That is, searching for { A, B, C } will only
+  // return claim objects that are associated to A, B and C. In other words,
+  // claims that are associated to A and B, but not to C, will not be returned
+  // in the example above.
+  string labels = 100;
+}
 
 message SearchI_Object_Symbol {
   // list set to any valid list ID returns all of the posts belonging to this
@@ -62,10 +74,6 @@ message SearchI_Object_Symbol {
   // time set to "latest" returns all posts in reverse chronological order.
   // Paging is available for paging kind "page" and "unix".
   string time = 200;
-  // tree set to any valid ID referring to a tree of claims returns all those
-  // claims belonging to the same tree. There is no paging support since the
-  // number of claims that any given tree may have is rather limited.
-  string tree = 300;
 }
 
 // SearchO is the output for searching posts.
