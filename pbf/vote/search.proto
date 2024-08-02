@@ -66,7 +66,7 @@ message SearchI_Object_Public {
   //     have set kind "stake" to verify real events on claims of kind
   //     "resolve".
   //
-  string kind = 200;
+  string kind = 100;
 }
 
 message SearchI_Object_Symbol {}
