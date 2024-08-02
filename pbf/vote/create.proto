@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package vote;
+option go_package = "./;vote";
+
+// CreateI is the input for creating votes.
+//
+//     {
+//         "object": [
+//             {
+//                 "public": {
+//                     "claim": "778237",
+//                     "kind": "stake",
+//                     "option": "true",
+//                     "value": "1.5"
+//                 }
+//             }
+//         ]
+//     }
+//
+message CreateI {
+  CreateI_Filter filter = 100;
+  repeated CreateI_Object object = 200;
+}
+
+message CreateI_Filter {}
+
+message CreateI_Object {
+  CreateI_Object_Intern intern = 100;
+  CreateI_Object_Public public = 200;
+}
+
+message CreateI_Object_Intern {}
+
+message CreateI_Object_Public {
+  // claim is the ID of the referenced claim being voted on. Note that the
+  // lifecycle of the referenced claim must be compliant with the vote kind
+  // provided.
+  string claim = 100;
+  // kind is the type of vote, e.g. "stake" or "truth" on which a vote is cast.
+  // Note that kind must be compliant with the lifecycle of the referenced
+  // claim.
+  //
+  //     "stake" defines votes for users expressing their own opinions. A vote
+  //     may have set kind "stake" to express opinions on claims of either kind
+  //     "adjourn", "dispute", "nullify" or "propose".
+  //
+  //     "truth" defines votes for users verifying real world events. A vote may
+  //     have set kind "stake" to verify real events on claims of kind
+  //     "resolve".
+  //
+  string kind = 200;
+  // option is the side of the vote being cast, e.g. "true" or "false". If
+  // option is "true", then the vote is in agreement. If option is "false", then
+  // the vote is in disagreement.
+  string option = 300;
+  // value is the weight of the vote being cast. If kind is "stake", then value
+  // might be any positive number. If kind is "truth", then value must be 1.
+  string value = 400;
+}
+
+// CreateO is the output for creating votes.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "created": "1689001255",
+//                     "id": "778237"
+//                 }
+//             }
+//         ]
+//     }
+//
+message CreateO {
+  CreateO_Filter filter = 100;
+  repeated CreateO_Object object = 200;
+}
+
+message CreateO_Filter {}
+
+message CreateO_Object {
+  CreateO_Object_Intern intern = 100;
+  CreateO_Object_Public public = 200;
+}
+
+message CreateO_Object_Intern {
+  // created is the unix timestamp in seconds at which the vote got created.
+  string created = 100;
+  // id is the ID of the vote object being created.
+  string id = 200;
+}
+
+message CreateO_Object_Public {}
