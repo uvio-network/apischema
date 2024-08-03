@@ -98,9 +98,9 @@ message SearchI_Object_Symbol {
 //                     "kind": "claim",
 //                     "labels": "economy,inflation",
 //                     "lifecycle": "propose",
-//                     "stake": "10,2,1,1,4.843",
 //                     "text": "foo bar lorem ipsum",
-//                     "token": "WETH"
+//                     "token": "WETH",
+//                     "votes": "10,2,1,4.843"
 //                 }
 //             }
 //         ]
@@ -168,46 +168,68 @@ message SearchO_Object_Public {
   //     "nullify" describes claims that question the verifiability of truth.
   //
   string lifecycle = 400;
-  // option is the side of the bet that the calling user took as market
-  // participant if this is a post of kind "claim". If the caller did not
-  // participate in this market, then option will be empty, given that the post
-  // kind is "claim". If kind equals "comment", then option is the side of the
-  // bet taken with this post regardless the caller. If option does equal "true"
-  // and the post kind is "comment", then the staked reputation does agree with
-  // the given statement. If option does equal "false" on the other hand, then
-  // the staked reputation disagrees with the given statement.
-  string option = 500;
-  // stake is the amount of reputation staked. If kind equals "claim", then
-  // stake might be a comma separated string of token denominated values in the
-  // format "agreement,disagreement,minimum,initial,user".
-  //
-  //     "agreement" will represent all reputation staked in agreement with the
-  //     given statement.
-  //
-  //     "disagreement" will represent all reputation staked in disagreement
-  //     with the given statement.
-  //
-  //     "minimum" will represent the minimum amount of reputation that must be
-  //     staked when participating in this market.
-  //
-  //     "initial" will represent the initial amount of reputation that the
-  //     proposing user staked when creating this market.
-  //
-  //     "user" will represent the amount of staked reputation belonging to the
-  //     calling user, if said user did in fact participate in the given market.
-  //
-  string stake = 600;
   // parent is the post ID of any claim that references another claim within its
   // own tree. The first claim within a tree does not have a parent. If a post
   // is for instance of kind "claim" and has lifecycle "dispute", then parent
   // will reference the prior claim of kind "resolve" within their common tree,
   // because any dispute does always try to challange any prior resolution.
-  string parent = 700;
+  string parent = 500;
   // text is the human readable description the user provides in order to make a
   // statement whether kind equals "claim" or "comment". This text may be
   // provided in markdown format. This text might be as long as a common blog
   // post. This text might contain external links.
-  string text = 800;
+  string text = 600;
   // token is the token in which the staked reputation is denominated.
-  string token = 900;
+  string token = 700;
+  // votes is the summary of votes cast in relation to the referenced claim. If
+  // kind equals "claim" and lifecycle is one of "adjourn", "dispute", "nullify"
+  // or "propose", then votes may be a comma separated string of information
+  // about staked reputation in the following format.
+  //
+  //     "agreement,disagreement,minimum,proposer"
+  //
+  // If kind equals "claim" and lifecycle is "resolve", then votes may be a
+  // comma separated string of information about verified events in the
+  // following format. Any permutation of votes may be possible, e.g. "10,0",
+  // "0,8", "8,4", "9,9" etc.
+  //
+  //     "agreement,disagreement"
+  //
+  // If kind equals "comment" and the lifecycle of the parent claim is one of
+  // "adjourn", "dispute", "nullify" or "propose", then votes may be a comma
+  // separated string of information about the reputation that the commenting
+  // user staked on the parent claim, in the following format. While most
+  // reputation staked may only take one side, any permutation of tokens may be
+  // possible, e.g. "0.5,0", "0,3", "2,0.02".
+  //
+  //     "agreement,disagreement"
+  //
+  // If kind equals "comment" and the lifecycle of the parent claim is
+  // "resolve", then votes may be a comma separated string of information about
+  // the events that the commenting user verified on the parent claim, in the
+  // following format. Comments must only have a single voice on either side,
+  // e.g. "1,0", "0,1".
+  //
+  //     "agreement,disagreement"
+  //
+  // Further, the votes summary provides contextual information for the claim or
+  // comment at hand. The following definitions may apply respectively.
+  //
+  //     "agreement" represents all votes cast in agreement with the given
+  //     statement. The values here may be the amount of tokens or the amount of
+  //     voices that either expressed opinions or verified the truth.
+  //
+  //     "disagreement" represents all votes cast in disagreement with the given
+  //     statement. The values here may be the amount of tokens or the amount of
+  //     voices that either expressed opinions or verified the truth.
+  //
+  //     "minimum" represents the minimum amount of reputation that must be
+  //     staked when participating in this market. This value does neither apply
+  //     to comments nor to resolutions.
+  //
+  //     "proposer" represents the amount of staked reputation belonging to the
+  //     user who created the claim on which opinions have to be expressed.
+  //     This value does neither apply to comments nor to resolutions.
+  //
+  string votes = 800;
 }
