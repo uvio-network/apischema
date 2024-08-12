@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+package wallet;
+option go_package = "./;wallet";
+
+// SearchI is the input for searching wallets. Note that searching for wallets
+// is restricted to the respective authenticated users. In order words, wallets
+// are not available to the public, and only the wallet owner can search their
+// own wallets.
+//
+//     {
+//         "filter": {
+//             "paging": {
+//                 "kind": "page",
+//                 "start": "0",
+//                 "stop": "49"
+//             }
+//         },
+//         "object": [
+//             {
+//                 "intern": {
+//                     "owner": "551265"
+//                 }
+//             }
+//         ]
+//     }
+//
+message SearchI {
+  SearchI_Filter filter = 100;
+  repeated SearchI_Object object = 200;
+}
+
+message SearchI_Filter {
+  SearchI_Filter_Paging paging = 100;
+}
+
+message SearchI_Filter_Paging {
+  string kind = 100;
+  string start = 200;
+  string stop = 300;
+}
+
+message SearchI_Object {
+  SearchI_Object_Intern intern = 100;
+  SearchI_Object_Public public = 200;
+  SearchI_Object_Symbol symbol = 300;
+}
+
+message SearchI_Object_Intern {
+  // id is the ID of the wallet object being searched. If searching for a
+  // particular ID, the search query object must not contain any other fields.
+  string id = 100;
+  // owner is the ID of the user having created the wallets being searched. If
+  // searching for wallets created by a particular owner, the search query
+  // object may also define public.claim in order to search for wallets a user
+  // has cast on a specific claim. Note that owner may be set to "self" in order
+  // to set the internal user ID by reference of the caller's access token.
+  string owner = 200;
+}
+
+message SearchI_Object_Public {}
+
+message SearchI_Object_Symbol {}
+
+// SearchO is the output for searching wallets.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "created": "1689001255",
+//                     "id": "778237",
+//                     "owner": "551265"
+//                 },
+//                 "public": {
+//                     "active": "true",
+//                     "address": "0x1234",
+//                     "description": "my first signer, the one with that tang",
+//                     "kind": "signer",
+//                     "provider": "privy"
+//                 }
+//             }
+//         ]
+//     }
+//
+message SearchO {
+  SearchO_Filter filter = 100;
+  repeated SearchO_Object object = 200;
+}
+
+message SearchO_Filter {}
+
+message SearchO_Object {
+  repeated SearchO_Object_Extern extern = 100;
+  SearchO_Object_Intern intern = 200;
+  SearchO_Object_Public public = 300;
+}
+
+message SearchO_Object_Extern {}
+
+message SearchO_Object_Intern {
+  // created is the unix timestamp in seconds at which this wallet got created.
+  string created = 100;
+  // id is the ID of the wallet object being searched.
+  string id = 200;
+  // owner is the ID of the user who created this wallet.
+  string owner = 300;
+}
+
+message SearchO_Object_Public {
+  // active is the flag deciding whether this wallet is actively in use.
+  string active = 100;
+  // address is the hex encoded public address of this wallet.
+  string address = 200;
+  // description is some human readable hint to help the user identify this
+  // wallet.
+  string description = 300;
+  // kind is the type of wallet describing for what purpose this wallet is used
+  // for, e.g. "contract", "signer".
+  //
+  //     "contract" defines smart contract wallets, or smart accounts according
+  //     to ERC-4337. Those smart contract wallets represent the user onchain.
+  //     They are controlled by the configured signer. For more information on
+  //     smart contract wallets see https://eips.ethereum.org/EIPS/eip-4337.
+  //
+  //     "signer" defines any wallet that controls the user's smart account, see
+  //     "contract". Wallets of kind "signer" can be Privy embedded wallets,
+  //     EOA's like hardware wallets, or even multisig Safe's.
+  //
+  string kind = 400;
+  // provider is the source or vendor of a wallet providing certain services or
+  // functionalities, e.g. "biconomy", "external", or "privy".
+  //
+  //     "biconomy" defines wallets managed by Biconomy, an account abstraction
+  //     infrastructure provider.
+  //
+  //     "external" defines wallets that the user chooses to connect and use as
+  //     signer, with or without account abstraction.
+  //
+  //     "privy" defines wallets managed by Privy, a Web3 Auth provider.
+  //
+  string provider = 500;
+}
