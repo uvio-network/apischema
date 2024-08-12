@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+package wallet;
+option go_package = "./;wallet";
+
+// CreateI is the input for creating wallets.
+//
+//     {
+//         "object": [
+//             {
+//                 "public": {
+//                     "active": "true",
+//                     "address": "0x1234",
+//                     "description": "my first signer, the one with that tang",
+//                     "kind": "signer",
+//                     "provider": "privy"
+//                 }
+//             }
+//         ]
+//     }
+//
+message CreateI {
+  CreateI_Filter filter = 100;
+  repeated CreateI_Object object = 200;
+}
+
+message CreateI_Filter {}
+
+message CreateI_Object {
+  CreateI_Object_Intern intern = 100;
+  CreateI_Object_Public public = 200;
+}
+
+message CreateI_Object_Intern {}
+
+message CreateI_Object_Public {
+  // active is the flag deciding whether this wallet is actively in use.
+  string active = 100;
+  // address is the hex encoded public address of this wallet.
+  string address = 200;
+  // description is some human readable hint to help the user identify this
+  // wallet.
+  string description = 300;
+  // kind is the type of wallet describing for what purpose this wallet is used
+  // for, e.g. "contract", "signer".
+  //
+  //     "contract" defines smart contract wallets, or smart accounts according
+  //     to ERC-4337. Those smart contract wallets represent the user onchain.
+  //     They are controlled by the configured signer. For more information on
+  //     smart contract wallets see https://eips.ethereum.org/EIPS/eip-4337.
+  //
+  //     "signer" defines any wallet that controls the user's smart account, see
+  //     "contract". Wallets of kind "signer" can be Privy embedded wallets,
+  //     EOA's like hardware wallets, or even multisig Safe's.
+  //
+  string kind = 400;
+  // provider is the source or vendor of a wallet providing certain services or
+  // functionalities, e.g. "biconomy", "external", or "privy".
+  //
+  //     "biconomy" defines wallets managed by Biconomy, an account abstraction
+  //     infrastructure provider.
+  //
+  //     "external" defines wallets that the user chooses to connect and use as
+  //     signer, with or without account abstraction.
+  //
+  //     "privy" defines wallets managed by Privy, a Web3 Auth provider.
+  //
+  string provider = 500;
+}
+
+// CreateO is the output for creating wallets.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "created": "1689001255",
+//                     "id": "778237"
+//                 }
+//             }
+//         ]
+//     }
+//
+message CreateO {
+  CreateO_Filter filter = 100;
+  repeated CreateO_Object object = 200;
+}
+
+message CreateO_Filter {}
+
+message CreateO_Object {
+  CreateO_Object_Intern intern = 100;
+  CreateO_Object_Public public = 200;
+}
+
+message CreateO_Object_Intern {
+  // created is the unix timestamp in seconds at which the wallet got created.
+  string created = 100;
+  // id is the ID of the wallet object being created.
+  string id = 200;
+}
+
+message CreateO_Object_Public {}
