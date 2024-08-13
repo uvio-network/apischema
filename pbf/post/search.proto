@@ -94,10 +94,12 @@ message SearchI_Object_Symbol {
 //                     "tree": "487465725612222"
 //                 },
 //                 "public": {
+//                     "chain": "421614",
 //                     "expiry": "1689001255",
 //                     "kind": "claim",
 //                     "labels": "economy,inflation",
 //                     "lifecycle": "propose",
+//                     "meta": "9,0",
 //                     "text": "foo bar lorem ipsum",
 //                     "token": "WETH",
 //                     "votes": "10,2,1,4.843"
@@ -144,16 +146,19 @@ message SearchO_Object_Intern {
 }
 
 message SearchO_Object_Public {
+  // chain is the chain ID on which a claim got proposed. This field must be
+  // empty for posts of kind "comment".
+  string chain = 100;
   // expiry is the unix timestamp in seconds at which the post expires. Every
   // expiry marks the point in time at which a claim may transition into a new
   // lifecycle phase.
-  string expiry = 100;
+  string expiry = 200;
   // kind is the type of post, e.g. "claim" or "comment" on which reputation is
   // staked.
-  string kind = 200;
+  string kind = 300;
   // labels is a comma separated list of category labels that this claim is
   // related to.
-  string labels = 300;
+  string labels = 400;
   // lifecycle describes the evolutionary stage of a claim within its own tree.
   // Only posts of kind "claim" will have a lifecycle set.
   //
@@ -167,20 +172,23 @@ message SearchO_Object_Public {
   //
   //     "nullify" describes claims that question the verifiability of truth.
   //
-  string lifecycle = 400;
+  string lifecycle = 500;
+  // meta may contain onchain specific meta data like tree ID and claim ID as
+  // tracked by a smart contract. meta should be empty for comments.
+  string meta = 600;
   // parent is the post ID of any claim that references another claim within its
   // own tree. The first claim within a tree does not have a parent. If a post
   // is for instance of kind "claim" and has lifecycle "dispute", then parent
   // will reference the prior claim of kind "resolve" within their common tree,
   // because any dispute does always try to challange any prior resolution.
-  string parent = 500;
+  string parent = 700;
   // text is the human readable description the user provides in order to make a
   // statement whether kind equals "claim" or "comment". This text may be
   // provided in markdown format. This text might be as long as a common blog
   // post. This text might contain external links.
-  string text = 600;
+  string text = 800;
   // token is the token in which the staked reputation is denominated.
-  string token = 700;
+  string token = 900;
   // votes is the summary of votes cast in relation to the referenced claim. If
   // kind equals "claim" and lifecycle is one of "adjourn", "dispute", "nullify"
   // or "propose", then votes may be a comma separated string of information
@@ -232,5 +240,5 @@ message SearchO_Object_Public {
   //     This value does neither apply to comments nor to claims of lifecycle
   //     "resolve".
   //
-  string votes = 800;
+  string votes = 1000;
 }
