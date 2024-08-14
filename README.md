@@ -14,7 +14,7 @@ languages so that we remain mostly independent of transport layer specifics.
   claim may have comments associated with them. Every claim and comment that
   exists must have reputation staked with it. That means that every opinion
   expressed and every vote cast on the Uvio platform has an inherent amount of
-  skin in the game attached to it without exception.
+  skin in the game attached to it, without exception.
 * The `List` resource allows users to manage custom feeds based on a set of
   associated rules. Static lists can only contain manually added claims. Dynamic
   lists contain automatically added claims based on the aggregated criteria of a
@@ -26,6 +26,12 @@ languages so that we remain mostly independent of transport layer specifics.
   static rules. Criteria like label IDs and user IDs are dynamic. Adding dynamic
   rules to dynamic lists restricts the lists' ability to only contain dynamic
   rules.
+* The `Vote` resource allows users to express their opinions and verify real
+  events. Every vote has a value attached to it. When staking reputation, this
+  value is the amount of tokens staked onchain. When verifying the truth this
+  value must be 1, because of the enforced notion "one man one vote". Every vote
+  object references a post ID, which is the claim on which the given vote was
+  cast.
 
 
 
