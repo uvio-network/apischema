@@ -11,13 +11,9 @@ option go_package = "./;vote";
 //                 "intern": {
 //                     "id": "778237"
 //                 },
-//                 "update": [
-//                     {
-//                         "operation": "replace",
-//                         "path": "/value",
-//                         "value": "2.5"
-//                     }
-//                 ]
+//                 "public": {
+//                     "hash": "0x1234"
+//                 }
 //             }
 //         ]
 //     }
@@ -33,7 +29,6 @@ message UpdateI_Object {
   UpdateI_Object_Intern intern = 100;
   UpdateI_Object_Public public = 200;
   UpdateI_Object_Symbol symbol = 300;
-  repeated UpdateI_Object_Update update = 400;
 }
 
 message UpdateI_Object_Intern {
@@ -41,16 +36,16 @@ message UpdateI_Object_Intern {
   string id = 100;
 }
 
-message UpdateI_Object_Public {}
+message UpdateI_Object_Public {
+  // hash is a votes's confirmed onchain transaction hash. hash can only be
+  // updated once, if its prior value was empty. Updating hash implies that the
+  // given vote got confirmed onchain, and with it the vote's interim lifecycle
+  // phase will not be "pending" anymore, but instead switch to the provided
+  // desired lifecycle phase.
+  string hash = 100;
+}
 
 message UpdateI_Object_Symbol {}
-
-message UpdateI_Object_Update {
-  string from = 100;
-  string operation = 200;
-  string path = 300;
-  string value = 400;
-}
 
 // UpdateO is the output for updating votes.
 //

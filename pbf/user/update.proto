@@ -10,14 +10,10 @@ option go_package = "./;user";
 //             {
 //                 "intern": {
 //                     "id": "551265"
+//                 },
+//                 "public": {
+//                     "name": "xh3"
 //                 }
-//                 "update": [
-//                     {
-//                         "operation": "replace",
-//                         "path": "/name/data",
-//                         "value": "xh3"
-//                     }
-//                 ]
 //             }
 //         ]
 //     }
@@ -33,7 +29,6 @@ message UpdateI_Object {
   UpdateI_Object_Intern intern = 100;
   UpdateI_Object_Public public = 200;
   UpdateI_Object_Symbol symbol = 300;
-  repeated UpdateI_Object_Update update = 400;
 }
 
 message UpdateI_Object_Intern {
@@ -41,16 +36,14 @@ message UpdateI_Object_Intern {
   string id = 100;
 }
 
-message UpdateI_Object_Public {}
+message UpdateI_Object_Public {
+  // image is the URL pointing to the user's profile picture.
+  string image = 100;
+  // name is the user name.
+  string name = 200;
+}
 
 message UpdateI_Object_Symbol {}
-
-message UpdateI_Object_Update {
-  string from = 100;
-  string operation = 200;
-  string path = 300;
-  string value = 400;
-}
 
 // UpdateO is the output for updating users.
 //

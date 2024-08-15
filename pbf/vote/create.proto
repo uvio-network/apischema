@@ -11,8 +11,8 @@ option go_package = "./;vote";
 //                 "public": {
 //                     "chain": "421614",
 //                     "claim": "778237",
-//                     "hash": "0x1234",
 //                     "kind": "stake",
+//                     "lifecycle": "onchain",
 //                     "option": "true",
 //                     "value": "1.5"
 //                 }
@@ -41,9 +41,11 @@ message CreateI_Object_Public {
   // lifecycle of the referenced claim must be compliant with the vote kind
   // provided.
   string claim = 200;
-  // hash is the onchain transaction hash for this vote. Setting hash implies
-  // that the vote got confirmed onchain, and with it the lifecycle phase
-  // "onchain" will be inferred automatically.
+  // hash is a votes's confirmed onchain transaction hash. hash left empty
+  // implies an interim lifecycle phase "pending". Setting hash implies that the
+  // given vote got confirmed onchain, and with it the vote's interim lifecycle
+  // phase will not be "pending" anymore, but instead switch to the provided
+  // desired lifecycle phase.
   string hash = 300;
   // kind is the type of vote, e.g. "stake" or "truth" on which a vote is cast.
   // Note that kind must be compliant with the lifecycle of the referenced
