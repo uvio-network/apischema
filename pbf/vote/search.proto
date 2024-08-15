@@ -138,13 +138,12 @@ message SearchO_Object_Public {
   //
   string kind = 400;
   // lifecycle describes the evolutionary stage of a vote. All votes start with
-  // the lifecycle phase "pending". Those pending votes were posted offchain,
-  // but have not yet been confirmed onchain. Once votes have been confirmed
-  // onchain the vote's lifecycle phase will be set to "onchain".
+  // the interim lifecycle phase "pending". Those pending votes were posted
+  // offchain, but have not yet been confirmed onchain. Once votes have been
+  // confirmed onchain the vote's desired lifecycle phase will be set as
+  // provided.
   //
   //     "onchain" describes votes that have been confirmed onchain.
-  //
-  //     "pending" describes votes that are not confirmed onchain.
   //
   string lifecycle = 500;
   // meta may contain any meta data about this vote. It is an optional field
