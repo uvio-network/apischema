@@ -11,8 +11,8 @@ option go_package = "./;vote";
 //                 "public": {
 //                     "chain": "421614",
 //                     "claim": "778237",
-//                     "hash": "0x1234",
 //                     "kind": "stake",
+//                     "lifecycle": "onchain",
 //                     "option": "true",
 //                     "value": "1.5"
 //                 }
@@ -41,9 +41,11 @@ message CreateI_Object_Public {
   // lifecycle of the referenced claim must be compliant with the vote kind
   // provided.
   string claim = 200;
-  // hash is the onchain transaction hash for this vote. Setting hash implies
-  // that the vote got confirmed onchain, and with it the lifecycle phase
-  // "onchain" will be inferred automatically.
+  // hash is a votes's confirmed onchain transaction hash. hash left empty
+  // implies an interim lifecycle phase "pending". Setting hash implies that the
+  // given vote got confirmed onchain, and with it the vote's interim lifecycle
+  // phase will not be "pending" anymore, but instead switch to the provided
+  // desired lifecycle phase.
   string hash = 300;
   // kind is the type of vote, e.g. "stake" or "truth" on which a vote is cast.
   // Note that kind must be compliant with the lifecycle of the referenced
@@ -59,13 +61,12 @@ message CreateI_Object_Public {
   //
   string kind = 400;
   // lifecycle describes the evolutionary stage of a vote. All votes start with
-  // the lifecycle phase "pending". Those pending votes were posted offchain,
-  // but have not yet been confirmed onchain. Once votes have been confirmed
-  // onchain the vote's lifecycle phase will be set to "onchain".
+  // the interim lifecycle phase "pending". Those pending votes were posted
+  // offchain, but have not yet been confirmed onchain. Once votes have been
+  // confirmed onchain the vote's desired lifecycle phase will be set as
+  // provided.
   //
   //     "onchain" describes votes that have been confirmed onchain.
-  //
-  //     "pending" describes votes that are not confirmed onchain.
   //
   string lifecycle = 500;
   // meta may contain any meta data about this vote. It is an optional field

@@ -11,13 +11,9 @@ option go_package = "./;wallet";
 //                 "intern": {
 //                     "id": "778237"
 //                 },
-//                 "update": [
-//                     {
-//                         "operation": "replace",
-//                         "path": "/description",
-//                         "value": "we use it for that other tang"
-//                     }
-//                 ]
+//                 "public": {
+//                     "description": "we use it for that other tang"
+//                 }
 //             }
 //         ]
 //     }
@@ -33,7 +29,6 @@ message UpdateI_Object {
   UpdateI_Object_Intern intern = 100;
   UpdateI_Object_Public public = 200;
   UpdateI_Object_Symbol symbol = 300;
-  repeated UpdateI_Object_Update update = 400;
 }
 
 message UpdateI_Object_Intern {
@@ -41,16 +36,13 @@ message UpdateI_Object_Intern {
   string id = 100;
 }
 
-message UpdateI_Object_Public {}
+message UpdateI_Object_Public {
+  // description is some human readable hint to help the user identify this
+  // wallet.
+  string description = 300;
+}
 
 message UpdateI_Object_Symbol {}
-
-message UpdateI_Object_Update {
-  string from = 100;
-  string operation = 200;
-  string path = 300;
-  string value = 400;
-}
 
 // UpdateO is the output for updating wallets.
 //
