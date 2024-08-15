@@ -91,7 +91,7 @@ message SearchO {
 message SearchO_Filter {}
 
 message SearchO_Object {
-  repeated SearchO_Object_Extern extern = 100;
+  SearchO_Object_Extern extern = 100;
   SearchO_Object_Intern intern = 200;
   SearchO_Object_Public public = 300;
 }

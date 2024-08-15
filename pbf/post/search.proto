@@ -87,12 +87,6 @@ message SearchI_Object_Symbol {
 //     {
 //         "object": [
 //             {
-//                 "extern": [
-//                     {
-//                         "kind": "list",
-//                         "user": true
-//                     }
-//                 ],
 //                 "intern": {
 //                     "created": "1689001255",
 //                     "id": "778237",
@@ -123,21 +117,12 @@ message SearchO {
 message SearchO_Filter {}
 
 message SearchO_Object {
-  repeated SearchO_Object_Extern extern = 100;
+  SearchO_Object_Extern extern = 100;
   SearchO_Object_Intern intern = 200;
   SearchO_Object_Public public = 300;
 }
 
-message SearchO_Object_Extern {
-  // kind is the type of external action being tracked, e.g. "list" for users
-  // adding this post of kind "claim" to one of their own lists.
-  string kind = 100;
-  // user expresses whether the calling user did the given external action
-  // themselves. For instance, if kind equals "list" and user equals "true",
-  // then the calling user added this post of kind "claim" to on of their own
-  // lists.
-  bool user = 200;
-}
+message SearchO_Object_Extern {}
 
 message SearchO_Object_Intern {
   // created is the unix timestamp in seconds at which this post got created.

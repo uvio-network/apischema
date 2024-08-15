@@ -63,6 +63,14 @@ message SearchI_Object_Symbol {}
 //     {
 //         "object": [
 //             {
+//                 "extern": {
+//                     "staked": [
+//                         {
+//                             "balance": "105.18",
+//                             "token": "UVX"
+//                         }
+//                     ]
+//                 },
 //                 "intern": {
 //                     "created": "1689001255",
 //                     "id": "551265"
@@ -84,8 +92,20 @@ message SearchO {
 message SearchO_Filter {}
 
 message SearchO_Object {
-  SearchO_Object_Intern intern = 100;
-  SearchO_Object_Public public = 200;
+  SearchO_Object_Extern extern = 100;
+  SearchO_Object_Intern intern = 200;
+  SearchO_Object_Public public = 300;
+}
+
+message SearchO_Object_Extern {
+  repeated SearchO_Object_Extern_Staked staked = 100;
+}
+
+message SearchO_Object_Extern_Staked {
+  // balance is user's staked balance of the specified token.
+  string balance = 100;
+  // token is the denomination of the user's staked balance.
+  string token = 200;
 }
 
 message SearchO_Object_Intern {
