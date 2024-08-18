@@ -43,6 +43,10 @@ message UpdateI_Object_Public {
   // and with it the claim's interim lifecycle phase will not be "pending"
   // anymore, but instead switch to the provided desired lifecycle phase.
   string hash = 100;
+  // meta is a post's meta data and can be updated at will for comments. A claim
+  // meta data may aim to maintain some initially given onchain meta data like
+  // onchain tree IDs, that are not ought to change once provided.
+  string meta = 200;
 }
 
 message UpdateI_Object_Symbol {}
