@@ -175,7 +175,7 @@ message SearchO_Object_Public {
   //
   string lifecycle = 600;
   // meta may contain onchain specific meta data like tree ID and claim ID as
-  // tracked by a smart contract. meta should be empty for comments.
+  // tracked by a smart contract.
   string meta = 700;
   // parent is the post ID of any claim that references another claim within its
   // own tree. The first claim within a tree does not have a parent. If a post
