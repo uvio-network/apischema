@@ -65,6 +65,10 @@ message SearchI_Object_Public {
   // claims that are associated to A and B, but not to C, will not be returned
   // in the example above.
   string labels = 100;
+  // lifecycle is the lifecycle phase to search specific claims for. For
+  // instance, if lifecycle is set to "dispute", all claims known to be disputes
+  // will be returned.
+  string lifecycle = 200;
 }
 
 message SearchI_Object_Symbol {
