@@ -11,9 +11,8 @@ option go_package = "./;wallet";
 //                 "public": {
 //                     "active": "true",
 //                     "address": "0x1234",
-//                     "description": "my first signer, the one with that tang",
-//                     "kind": "signer",
-//                     "provider": "privy"
+//                     "description": "my favourite, the one with that tang",
+//                     "kind": "injected"
 //                 }
 //             }
 //         ]
@@ -42,30 +41,18 @@ message CreateI_Object_Public {
   // wallet.
   string description = 300;
   // kind is the type of wallet describing for what purpose this wallet is used
-  // for, e.g. "contract", "signer".
+  // for, e.g. "embedded", "injected".
   //
-  //     "contract" defines smart contract wallets, or smart accounts according
-  //     to ERC-4337. Those smart contract wallets represent the user onchain.
-  //     They are controlled by the configured signer. For more information on
-  //     smart contract wallets see https://eips.ethereum.org/EIPS/eip-4337.
+  //     "embedded" defines smart contract wallets, or "smart accounts"
+  //     according to ERC-4337. Those smart contract wallets are controlled by
+  //     the configured signer. For more information on smart contract wallets
+  //     see https://eips.ethereum.org/EIPS/eip-4337.
   //
-  //     "signer" defines any wallet that controls the user's smart account, see
-  //     "contract". Wallets of kind "signer" can be Privy embedded wallets,
-  //     EOA's like hardware wallets, or even multisig Safe's.
+  //     "injected" defines any traditional EOA that the user chose to connect
+  //     themselves. Those wallets can be thought of as the typical browser
+  //     extensions, and hardware wallets.
   //
   string kind = 400;
-  // provider is the source or vendor of a wallet providing certain services or
-  // functionalities, e.g. "biconomy", "external", or "privy".
-  //
-  //     "biconomy" defines wallets managed by Biconomy, an account abstraction
-  //     infrastructure provider.
-  //
-  //     "external" defines wallets that the user chooses to connect and use as
-  //     signer, with or without account abstraction.
-  //
-  //     "privy" defines wallets managed by Privy, a Web3 Auth provider.
-  //
-  string provider = 500;
 }
 
 // CreateO is the output for creating wallets.
