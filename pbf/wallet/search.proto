@@ -73,7 +73,6 @@ message SearchI_Object_Symbol {}
 //                     "owner": "551265"
 //                 },
 //                 "public": {
-//                     "active": "true",
 //                     "address": "0x1234",
 //                     "description": "my favourite, the one with that tang",
 //                     "kind": "injected"
@@ -107,13 +106,11 @@ message SearchO_Object_Intern {
 }
 
 message SearchO_Object_Public {
-  // active is the flag deciding whether this wallet is actively in use.
-  string active = 100;
   // address is the hex encoded public address of this wallet.
-  string address = 200;
+  string address = 100;
   // description is some human readable hint to help the user identify this
   // wallet.
-  string description = 300;
+  string description = 200;
   // kind is the type of wallet describing for what purpose this wallet is used
   // for, e.g. "embedded", "injected".
   //
@@ -126,5 +123,5 @@ message SearchO_Object_Public {
   //     themselves. Those wallets can be thought of as the typical browser
   //     extensions, and hardware wallets.
   //
-  string kind = 400;
+  string kind = 300;
 }

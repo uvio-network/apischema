@@ -14,7 +14,6 @@ option go_package = "./;post";
 //                     "kind": "claim",
 //                     "labels": "economy,inflation",
 //                     "lifecycle": "propose",
-//                     "meta": "9,0",
 //                     "text": "foo bar lorem ipsum",
 //                     "token": "WETH"
 //                 }
@@ -74,8 +73,7 @@ message CreateI_Object_Public {
   //     "resolve" describes claims that allow to verify the truth.
   //
   string lifecycle = 600;
-  // meta may contain onchain specific meta data like tree ID and claim ID as
-  // tracked by a smart contract.
+  // meta may contain onchain arbitrary meta data.
   string meta = 700;
   // parent is the post ID of any claim that references another claim within its
   // own tree. The first claim within a tree does not have a parent. If a post

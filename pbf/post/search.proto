@@ -103,8 +103,7 @@ message SearchI_Object_Symbol {
 //                     "hash": "0x1234",
 //                     "kind": "claim",
 //                     "labels": "economy,inflation",
-//                     "lifecycle": "propose",
-//                     "meta": "9,0",
+//                     "lifecycle": "propose:onchain",
 //                     "text": "foo bar lorem ipsum",
 //                     "token": "WETH",
 //                     "votes": "10,2,1,4.843"
@@ -126,7 +125,15 @@ message SearchO_Object {
   SearchO_Object_Public public = 300;
 }
 
-message SearchO_Object_Extern {}
+message SearchO_Object_Extern {
+  // samples contains wallet addresses and user IDs as selected by the random
+  // truth sampling process, if any. The key here will be wallet addresses, and
+  // the values here will be user IDs. It may happen that user IDs are missing
+  // if users exclusively participated onchain. Samples will only be returned
+  // for claims of lifecycle phase resolve, because only such claims select
+  // stakers randomly in order to verify events in teh real world.
+  map<string, string> samples = 100;
+}
 
 message SearchO_Object_Intern {
   // created is the unix timestamp in seconds at which this post got created.
@@ -161,25 +168,41 @@ message SearchO_Object_Public {
   // related to.
   string labels = 500;
   // lifecycle describes the desired lifecycle phase of a claim within its own
-  // tree. Only posts of kind "claim" will have a lifecycle phase set. All
-  // claims start with the interim lifecycle phase "pending". Those pending
-  // claims were posted offchain, but have not yet been confirmed onchain. Once
-  // claims have been confirmed onchain the claim's desired lifecycle phase will
-  // be set as provided.
+  // tree, plus its status within the system. This field may look like one of
+  // the examples below.
   //
-  //     "adjourn" describes claims that defer claim resolution.
+  //     propose:pending
   //
-  //     "dispute" describes claims that challenge any prior resolution.
+  //     resolve:onchain
   //
-  //     "nullify" describes claims that question the verifiability of truth.
+  //     dispute:pending
   //
-  //     "propose" describes claims that make any initial statement.
+  //     balance:onchain
   //
-  //     "resolve" describes claims that allow to verify the truth.
+  // Only posts of kind "claim" will have a lifecycle phase set. The full list
+  // of possible lifecycle phases can be seen below.
+  //
+  //     "adjourn" describes claims that defer claim resolution
+  //
+  //     "balance" describes claims that finalized by updating user balances
+  //
+  //     "dispute" describes claims that challenge any prior resolution
+  //
+  //     "nullify" describes claims that question the verifiability of truth
+  //
+  //     "propose" describes claims that make any initial statement
+  //
+  //     "resolve" describes claims that allow to verify the truth
+  //
+  // All claims start with the interim system status "pending". Those pending
+  // claims were posted offchain, but have not yet been confirmed onchain.
+  //
+  //     "pending" describes claims that have only been posted offchain
+  //
+  //     "onchain" describes claims that have been confirmed onchain
   //
   string lifecycle = 600;
-  // meta may contain onchain specific meta data like tree ID and claim ID as
-  // tracked by a smart contract.
+  // meta may contain onchain arbitrary meta data.
   string meta = 700;
   // parent is the post ID of any claim that references another claim within its
   // own tree. The first claim within a tree does not have a parent. If a post
