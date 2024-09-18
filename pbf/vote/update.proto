@@ -43,7 +43,7 @@ message UpdateI_Object_Public {
   // phase will not be "pending" anymore, but instead switch to the provided
   // desired lifecycle phase.
   string hash = 100;
-  // meta is a vote's meta data and can be updated at will.
+  // meta may contain onchain arbitrary meta data.
   string meta = 200;
 }
 
