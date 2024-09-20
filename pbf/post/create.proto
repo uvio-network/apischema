@@ -10,6 +10,7 @@ option go_package = "./;post";
 //             {
 //                 "public": {
 //                     "chain": "421614",
+//                     "contract": "0x5678",
 //                     "expiry": "1689001255",
 //                     "kind": "claim",
 //                     "labels": "economy,inflation",
@@ -39,22 +40,25 @@ message CreateI_Object_Public {
   // chain is the chain ID on which a claim got proposed. This field must be
   // empty for posts of kind "comment".
   string chain = 100;
+  // contract is the address of the token specific smart contract on which this
+  // market is facilitated.
+  string contract = 200;
   // expiry is the unix timestamp in seconds at which the post expires. Every
   // expiry marks the point in time at which a claim may transition into a new
   // lifecycle phase.
-  string expiry = 200;
+  string expiry = 300;
   // hash is the onchain transaction hash if post kind is "claim". hash must be
   // empty for comments. hash left empty implies an interim lifecycle phase
   // "pending". Setting hash implies that the given claim got confirmed onchain,
   // and with it the claim's interim lifecycle phase will not be "pending"
   // anymore, but instead switch to the provided desired lifecycle phase.
-  string hash = 300;
+  string hash = 400;
   // kind is the type of post, e.g. "claim" or "comment" on which reputation is
   // staked.
-  string kind = 400;
+  string kind = 500;
   // labels is a comma separated list of category labels that this claim is
   // related to.
-  string labels = 500;
+  string labels = 600;
   // lifecycle describes the desired lifecycle phase of a claim within its own
   // tree. Only posts of kind "claim" will have a lifecycle phase set. All
   // claims start with the interim lifecycle phase "pending". Those pending
@@ -72,22 +76,22 @@ message CreateI_Object_Public {
   //
   //     "resolve" describes claims that allow to verify the truth.
   //
-  string lifecycle = 600;
+  string lifecycle = 700;
   // meta may contain onchain arbitrary meta data.
-  string meta = 700;
+  string meta = 800;
   // parent is the post ID of any claim that references another claim within its
   // own tree. The first claim within a tree does not have a parent. If a post
   // is for instance of kind "claim" and has lifecycle "dispute", then parent
   // will reference the prior claim of kind "resolve" within their common tree,
   // because any dispute does always try to challange any prior resolution.
-  string parent = 800;
+  string parent = 900;
   // text is the human readable description the user provides in order to make a
   // statement, whether the post kind is "claim" or "comment". This text may be
   // provided in markdown format. This text might as be long as a common blog
   // post. This text might contain external links.
-  string text = 900;
+  string text = 1000;
   // token is the token in which the staked reputation is denominated.
-  string token = 1000;
+  string token = 1100;
 }
 
 // CreateO is the output for creating posts.
