@@ -77,7 +77,6 @@ message SearchI_Object_Symbol {}
 //                     "owner": "551265"
 //                 },
 //                 "public": {
-//                     "chain": "421614",
 //                     "claim": "778237",
 //                     "hash": "0x1234",
 //                     "kind": "stake",
@@ -114,16 +113,14 @@ message SearchO_Object_Intern {
 }
 
 message SearchO_Object_Public {
-  // chain is the chain ID on which a vote got expressed.
-  string chain = 100;
   // claim is the ID of the referenced claim being voted on. Note that the
   // lifecycle of the referenced claim must be compliant with the vote kind
   // provided.
-  string claim = 200;
+  string claim = 100;
   // hash is the onchain transaction hash for this vote. Setting hash implies
   // that the vote got confirmed onchain, and with it the lifecycle phase
   // "onchain" will be inferred automatically.
-  string hash = 300;
+  string hash = 200;
   // kind is the type of vote, e.g. "stake" or "truth" on which a vote is cast.
   // Note that kind must be compliant with the lifecycle of the referenced
   // claim.
@@ -136,7 +133,7 @@ message SearchO_Object_Public {
   //     have set kind "stake" to verify real events on claims of kind
   //     "resolve".
   //
-  string kind = 400;
+  string kind = 300;
   // lifecycle describes the vote's status within the system. This field may
   // look like one of the examples below.
   //
@@ -150,14 +147,14 @@ message SearchO_Object_Public {
   //
   //     "onchain" describes votes that have been confirmed onchain
   //
-  string lifecycle = 500;
+  string lifecycle = 400;
   // meta may contain onchain arbitrary meta data.
-  string meta = 600;
+  string meta = 500;
   // option is the side of the vote being cast, e.g. "true" or "false". If
   // option is "true", then the vote is in agreement. If option is "false", then
   // the vote is in disagreement.
-  string option = 700;
+  string option = 600;
   // value is the weight of the vote being cast. If kind is "stake", then value
   // might be any positive number. If kind is "truth", then value must be 1.
-  string value = 800;
+  string value = 700;
 }
