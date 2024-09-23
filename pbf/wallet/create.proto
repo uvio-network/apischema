@@ -40,10 +40,10 @@ message CreateI_Object_Public {
   // kind is the type of wallet describing for what purpose this wallet is used
   // for, e.g. "embedded", "injected".
   //
-  //     "embedded" defines smart contract wallets, or "smart accounts"
-  //     according to ERC-4337. Those smart contract wallets are controlled by
-  //     the configured signer. For more information on smart contract wallets
-  //     see https://eips.ethereum.org/EIPS/eip-4337.
+  //     "embedded" defines smart contract wallets or "smart accounts" according
+  //     to ERC-4337. Those smart contract wallets are controlled by the
+  //     configured signer. For more information on smart contract wallets see
+  //     https://eips.ethereum.org/EIPS/eip-4337.
   //
   //     "injected" defines any traditional EOA that the user chose to connect
   //     themselves. Those wallets can be thought of as the typical browser
