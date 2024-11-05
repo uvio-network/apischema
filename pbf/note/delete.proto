@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package note;
+option go_package = "./;note";
+
+// DeleteI is the input for deleting notes.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "id": "778237"
+//                 }
+//             }
+//         ]
+//     }
+//
+message DeleteI {
+  DeleteI_Filter filter = 100;
+  repeated DeleteI_Object object = 200;
+}
+
+message DeleteI_Filter {}
+
+message DeleteI_Object {
+  DeleteI_Object_Intern intern = 100;
+  DeleteI_Object_Public public = 200;
+}
+
+message DeleteI_Object_Intern {
+  // id is the ID of the note object being deleted.
+  string id = 100;
+}
+
+message DeleteI_Object_Public {}
+
+// DeleteO is the output for deleting notes.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "status": "deleted"
+//                 }
+//             }
+//         ]
+//     }
+//
+message DeleteO {
+  DeleteO_Filter filter = 100;
+  repeated DeleteO_Object object = 200;
+}
+
+message DeleteO_Filter {}
+
+message DeleteO_Object {
+  DeleteO_Object_Intern intern = 100;
+  DeleteO_Object_Public public = 200;
+}
+
+message DeleteO_Object_Intern {
+  // status is the resource status upon successful note deletion.
+  string status = 100;
+}
+
+message DeleteO_Object_Public {}

@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package note;
+option go_package = "./;note";
+
+// UpdateI is the input for updating notes.
+//
+//     {
+//         "object": [
+//             {
+//                 "public": {
+//                     "kind": "customLists",
+//                     "pointer": "1730811282"
+//                 }
+//             }
+//         ]
+//     }
+//
+message UpdateI {
+  UpdateI_Filter filter = 100;
+  repeated UpdateI_Object object = 200;
+}
+
+message UpdateI_Filter {}
+
+message UpdateI_Object {
+  UpdateI_Object_Intern intern = 100;
+  UpdateI_Object_Public public = 200;
+  UpdateI_Object_Symbol symbol = 300;
+}
+
+message UpdateI_Object_Intern {}
+
+message UpdateI_Object_Public {
+  // kind is the notification type being updated.
+  string kind = 100;
+  // pointer is the acknowleged checkpoint for notifications delivered up to the
+  // provided point.
+  string pointer = 200;
+}
+
+message UpdateI_Object_Symbol {}
+
+// UpdateO is the output for updating notes.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "status": "updated"
+//                 }
+//             }
+//         ]
+//     }
+//
+message UpdateO {
+  UpdateO_Filter filter = 100;
+  repeated UpdateO_Object object = 200;
+}
+
+message UpdateO_Filter {}
+
+message UpdateO_Object {
+  UpdateO_Object_Intern intern = 100;
+  UpdateO_Object_Public public = 200;
+}
+
+message UpdateO_Object_Intern {
+  // status is the resource status upon successful note modification.
+  string status = 100;
+}
+
+message UpdateO_Object_Public {}

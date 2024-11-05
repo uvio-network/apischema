@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package note;
+option go_package = "./;note";
+
+// CreateI is the input for creating notes.
+//
+//     {
+//         "object": [
+//             {
+//                 "public": {}
+//             }
+//         ]
+//     }
+//
+message CreateI {
+  CreateI_Filter filter = 100;
+  repeated CreateI_Object object = 200;
+}
+
+message CreateI_Filter {}
+
+message CreateI_Object {
+  CreateI_Object_Intern intern = 100;
+  CreateI_Object_Public public = 200;
+}
+
+message CreateI_Object_Intern {}
+
+message CreateI_Object_Public {}
+
+// CreateO is the output for creating notes.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {}
+//             }
+//         ]
+//     }
+//
+message CreateO {
+  CreateO_Filter filter = 100;
+  repeated CreateO_Object object = 200;
+}
+
+message CreateO_Filter {}
+
+message CreateO_Object {
+  CreateO_Object_Intern intern = 100;
+  CreateO_Object_Public public = 200;
+}
+
+message CreateO_Object_Intern {}
+
+message CreateO_Object_Public {}
