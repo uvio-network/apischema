@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package note;
+option go_package = "./;note";
+
+// SearchI is the input for searching notes.
+//
+//     {
+//         "filter": {
+//             "paging": {
+//                 "kind": "page",
+//                 "start": "0",
+//                 "stop": "49"
+//             }
+//         },
+//         "object": [
+//             {
+//                 "public": {
+//                     "kind": "customLists"
+//                 }
+//             }
+//         ]
+//     }
+//
+message SearchI {
+  SearchI_Filter filter = 100;
+  repeated SearchI_Object object = 200;
+}
+
+message SearchI_Filter {
+  SearchI_Filter_Paging paging = 100;
+}
+
+message SearchI_Filter_Paging {
+  string kind = 100;
+  string start = 200;
+  string stop = 300;
+}
+
+message SearchI_Object {
+  SearchI_Object_Intern intern = 100;
+  SearchI_Object_Public public = 200;
+  SearchI_Object_Symbol symbol = 300;
+}
+
+message SearchI_Object_Intern {}
+
+message SearchI_Object_Public {
+  // kind is the notification type being searched.
+  string kind = 100;
+}
+
+message SearchI_Object_Symbol {}
+
+// SearchO is the output for searching notes.
+//
+//     {
+//         "object": [
+//             {
+//                 "intern": {
+//                     "created": "1689001255",
+//                     "id": "778237",
+//                     "owner": "551265"
+//                 },
+//                 "public": {
+//                     "kind": "customLists",
+//                     "resource": "47263476523"
+//                 }
+//             }
+//         ]
+//     }
+//
+message SearchO {
+  SearchO_Filter filter = 100;
+  repeated SearchO_Object object = 200;
+}
+
+message SearchO_Filter {}
+
+message SearchO_Object {
+  SearchO_Object_Extern extern = 100;
+  SearchO_Object_Intern intern = 200;
+  SearchO_Object_Public public = 300;
+}
+
+message SearchO_Object_Extern {}
+
+message SearchO_Object_Intern {
+  // created is the unix timestamp in seconds at which this note got created.
+  string created = 100;
+  // id is the ID of the note object being searched.
+  string id = 200;
+  // owner is the ID of the user that this note belongs to.
+  string owner = 300;
+}
+
+message SearchO_Object_Public {
+  // kind is the notification type being searched.
+  string kind = 100;
+  // message is the notification message in case there is no resource. This
+  // message may simply be informational to explain that something happened,
+  // without there being any tangible object for it in the backend.
+  string message = 200;
+  // resource is the object ID that a user has to be notified about in case
+  // there is no message.
+  string resource = 300;
+}
