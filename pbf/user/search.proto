@@ -103,4 +103,8 @@ message SearchO_Object_Public {
   string image = 100;
   // name is the user name.
   string name = 200;
+  // pointers is the user's mapping between note kinds and note pointers. The
+  // pointers tracked here per notification topic keep track of the point up to
+  // which users caught up with their notifications.
+  map<string, string> pointers = 300;
 }
