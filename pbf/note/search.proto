@@ -64,6 +64,7 @@ message SearchI_Object_Symbol {}
 //                 },
 //                 "public": {
 //                     "kind": "customLists",
+//                     "pointer": "1731005852",
 //                     "resource": "47263476523"
 //                 }
 //             }
@@ -101,7 +102,11 @@ message SearchO_Object_Public {
   // message may simply be informational to explain that something happened,
   // without there being any tangible object for it in the backend.
   string message = 200;
+  // pointer is the user specific note pointer for the given note kind. This
+  // pointer tracks the point up to which the calling user caught up with the
+  // given notification topic.
+  string pointer = 300;
   // resource is the object ID that a user has to be notified about in case
   // there is no message.
-  string resource = 300;
+  string resource = 400;
 }
