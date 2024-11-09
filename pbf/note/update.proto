@@ -9,7 +9,6 @@ option go_package = "./;note";
 //         "object": [
 //             {
 //                 "public": {
-//                     "kind": "customLists",
 //                     "pointer": "1730811282"
 //                 }
 //             }
@@ -32,11 +31,9 @@ message UpdateI_Object {
 message UpdateI_Object_Intern {}
 
 message UpdateI_Object_Public {
-  // kind is the notification type being updated.
-  string kind = 100;
   // pointer is the acknowleged checkpoint for notifications delivered up to the
   // provided point.
-  string pointer = 200;
+  string pointer = 100;
 }
 
 message UpdateI_Object_Symbol {}
