@@ -55,6 +55,9 @@ message SearchI_Object_Symbol {}
 // SearchO is the output for searching notes.
 //
 //     {
+//         "filter": {
+//             "pointer": "1689001255"
+//         },
 //         "object": [
 //             {
 //                 "intern": {
@@ -64,7 +67,6 @@ message SearchI_Object_Symbol {}
 //                 },
 //                 "public": {
 //                     "kind": "customLists",
-//                     "pointer": "1731005852",
 //                     "resource": "47263476523"
 //                 }
 //             }
@@ -76,7 +78,11 @@ message SearchO {
   repeated SearchO_Object object = 200;
 }
 
-message SearchO_Filter {}
+message SearchO_Filter {
+  // pointer is the user specific note pointer, which tracks the point up to
+  // which the calling user caught up with all of its notifications.
+  string pointer = 100;
+}
 
 message SearchO_Object {
   SearchO_Object_Extern extern = 100;
@@ -102,11 +108,7 @@ message SearchO_Object_Public {
   // message may simply be informational to explain that something happened,
   // without there being any tangible object for it in the backend.
   string message = 200;
-  // pointer is the user specific note pointer for the given note kind. This
-  // pointer tracks the point up to which the calling user caught up with the
-  // given notification topic.
-  string pointer = 300;
   // resource is the object ID that a user has to be notified about in case
   // there is no message.
-  string resource = 400;
+  string resource = 300;
 }
